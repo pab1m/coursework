@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система управління витратами</title>
+    <link rel="stylesheet" href="{% static 'managingsystem/css/loginDesign.css' %}"> <!-- Підключення CSS-файлу -->
+</head>
+<body>
+    <div class="stack-pane"> <!-- Основний контейнер, який об'єднує ліву та праву частини -->
+        <div class="left-form"> <!-- Ліва частина -->
+            <label>Система Управління Витратами</label> <!-- Текст у лівій частині -->
+        </div>
+        <div class="right-form"> <!-- Права частина -->
+            <label>WELCOME</label> <!-- Привітальний текст -->
+            <input type="text" class="textfield" placeholder="Логін"> <!-- Поле введення для імені користувача -->
+            <input type="password" class="textfield" placeholder="Пароль"> <!-- Поле введення для паролю -->
+            <button class="login-btn">Увійти</button> <!-- Кнопка входу -->
+             <div class="register-link">
+                <a href="/register">Реєстрація</a> <!-- Посилання для переходу на сторінку реєстрації -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

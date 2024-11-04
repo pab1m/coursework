@@ -1,0 +1,105 @@
+/* Загальні стилі для всієї сторінки */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f7f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.stack-pane {
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Ліва частина */
+.left-form {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: white;
+    width: 250px;
+    min-height: 492px;
+}
+
+.left-form label {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+/* Права частина */
+.right-form {
+    background-color: white;
+    padding: 40px 30px;
+    width: 450px;
+    min-height: 492px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.right-form label {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.textfield {
+    background-color: #f1f3f4;
+    border: 1px solid #dfe1e5;
+    border-radius: 4px;
+    font-size: 1em;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+    width: calc(100% - 34px);
+    box-sizing: border-box;
+}
+
+.textfield:focus {
+    border-color: #4285f4;
+    outline: none;
+}
+
+.login-btn {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1em;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    /*margin-bottom: 20px;*/
+    width: 200px;
+    align-self: center;
+}
+
+.login-btn:hover {
+    background: linear-gradient(135deg, #5a0db3 0%, #1f63d0 100%);
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.register-link a {
+    color: #4285f4; /* Колір посилання */
+    text-decoration: none; /* Вимикає підкреслення */
+    transition: color 0.3s; /* Анімація зміни кольору */
+}
+
+.register-link a:hover {
+    color: #0ee711; /* Зміна кольору при наведенні */
+}
