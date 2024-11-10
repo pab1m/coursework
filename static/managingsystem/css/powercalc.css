@@ -1,0 +1,133 @@
+/* Стилі для всіх елементів */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Основні стилі для тіла */
+body {
+    display: flex;
+    height: 100vh;
+}
+
+/* Контейнер, який містить таблицю і форму */
+.container {
+    display: flex;
+    /*width: 100%;*/
+}
+
+.sidebar {
+    width: 250px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar h2 span {
+    font-weight: normal;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sign-out {
+    background: #449d6b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Форма для вибору приладів */
+.form-container {
+    flex: 1;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button.add-to-cart,
+button.add-to-dashboard {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    background: #007bff;
+    color: white;
+}
+
+.total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Основний контент з таблицею */
+.content {
+    flex: 2;
+    padding: 20px;
+}
+
+.table-container {
+    background: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container table th,
+.table-container table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.table-container table th {
+    background: #eaeaea;
+}

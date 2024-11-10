@@ -1,28 +1,111 @@
+{% extends 'managingsystem/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Система управління витратами</title>
-    <link rel="stylesheet" href="{% static 'managingsystem/css/loginDesign.css' %}"> <!-- Підключення CSS-файлу -->
-</head>
-<body>
-    <div class="stack-pane"> <!-- Основний контейнер, який об'єднує ліву та праву частини -->
-        <div class="left-form"> <!-- Ліва частина -->
-            <label>Система Управління Витратами</label> <!-- Текст у лівій частині -->
-        </div>
-        <div class="right-form"> <!-- Права частина -->
-            <label>WELCOME</label> <!-- Привітальний текст -->
-            <input type="text" class="textfield" placeholder="Логін"> <!-- Поле введення для імені користувача -->
-            <input type="password" class="textfield" placeholder="Пароль"> <!-- Поле введення для паролю -->
-            <button class="login-btn">Увійти</button> <!-- Кнопка входу -->
-             <div class="register-link">
-                <a href="/register">Реєстрація</a> <!-- Посилання для переходу на сторінку реєстрації -->
+{% block links %}
+    <link rel="stylesheet" href="{% static 'managingsystem/css/style.css' %}">
+{% endblock %}
+
+{% block body %}
+        <div class="main-content">
+           <form method="post" action="{% url 'add_app' %}" id="appliance-form">
+                {% csrf_token %}
+                <input type="hidden" name="appliance_id" id="appliance-id">
+                <div class="form-section">
+                    <h3 id="form-title">Додати прилад</h3>
+                    <div class="form-group">
+                        <label for="brand-name">Бренд:</label>
+                        <input type="text" name="brand_name" id="brand-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-name">Назва приладу:</label>
+                        <input type="text" name="product_name" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Статус:</label>
+                        <select name="status" id="status" required>
+                            <option value="Вимкнений">Вимкнений</option>
+                            <option value="Ввімкнений">Ввімкнений</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="power">Потужність:</label>
+                        <input type="text" name="power" id="power" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="add-btn" id="submit-btn">Додати</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Бренд</th>
+                            <th>Прилад</th>
+                            <th>Потужність</th>
+                            <th>Статус</th>
+                            <th>Дата</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appliance in appliances %}
+                            <tr data-id="{{ appliance.id }}">
+                                <td><span class="brand">{{ appliance.brand_name }}</span></td>
+                                <td><span class="product">{{ appliance.product_name }}</span></td>
+                                <td><span class="power">{{ appliance.power }}</span></td>
+                                <td><span class="status">{{ appliance.status }}</span></td>
+                                <td>{{ appliance.date_added }}</td>
+                                <td class="appliance-action">
+                                    <button class="update-btn" onclick="editAppliance({{ appliance.id }})">Змінити</button>
+                                    <form method="post" action="{% url 'delete_app' appliance.id %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-btn">Видалити</button>
+                                    </form>
+                                    <form method="post" action="{% url 'toggle_status' appliance.id %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="status-btn">
+                                            {% if appliance.status == 'Ввімкнений' %}
+                                                Вимкнути
+                                            {% else %}
+                                                Увімкнути
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</body>
-</html>
 
+    <script>
+        function editAppliance(id) {
+            // Отримуємо елемент рядка таблиці
+            const row = document.querySelector(`tr[data-id='${id}']`);
+            const brand = row.querySelector('.brand').textContent;
+            const product = row.querySelector('.product').textContent;
+            const power = row.querySelector('.power').textContent;
+            const status = row.querySelector('.status').textContent;
+
+            // Заповнюємо форму значеннями
+            document.getElementById('brand-name').value = brand;
+            document.getElementById('product-name').value = product;
+            document.getElementById('power').value = power;
+            document.getElementById('status').value = status;
+            document.getElementById('appliance-id').value = id;
+
+            // Змінюємо заголовок форми
+            document.getElementById('form-title').textContent = 'Змінити прилад';
+            // Змінюємо текст кнопки
+            document.getElementById('submit-btn').textContent = 'Виконати';
+
+            // Змінюємо action форми
+            const form = document.getElementById('appliance-form');
+            form.action = `/update_app/${id}/`;
+        }
+    </script>
+{% endblock %}

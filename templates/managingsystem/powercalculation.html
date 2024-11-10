@@ -1,0 +1,89 @@
+{% extends 'managingsystem/base.html' %}
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'managingsystem/css/powercalc.css' %}">
+{% endblock %}
+
+{% block body %}
+    <main class="content">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Бренд</th>
+                        <th>Прилад</th>
+                        <th>Потужність</th>
+                        <th>Кількість</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.brand_name }}</td>
+                            <td>{{ item.product_name }}</td>
+                            <td>{{ item.power }}</td>
+                            <td>{{ item.quantity }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">No content in table</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <aside class="form-container">
+    <form method="post" action="{% url 'power_calculation' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="brand">Бренд:</label>
+            <select id="brand" name="brand_name" onchange="updateProducts()">
+                <option value="">Виберіть...</option>
+                {% for brand in brands %}
+                    <option value="{{ brand }}">{{ brand }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="product-name">Прилад:</label>
+            <select id="product-name" name="product_name">
+                <option value="">Виберіть...</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Кількість:</label>
+            <input type="number" id="quantity" name="quantity" value="0" min="0" max="100">
+        </div>
+        <button type="submit" class="add-to-cart">Додати</button>
+    </form>
+    <div class="total">
+        <span>Total: </span><span class="total-value">{{ total_power }}</span>
+    </div>
+    <button class="add-to-dashboard">Add to Dashboard</button>
+</aside>
+
+<script>
+    const appliances = {{ appliances_json|safe }};
+
+    function updateProducts() {
+        const brandSelect = document.getElementById('brand');
+        const productSelect = document.getElementById('product-name');
+        const selectedBrand = brandSelect.value;
+
+        // Clear current options
+        productSelect.innerHTML = '<option value="">Виберіть...</option>';
+
+        // Populate products based on selected brand
+        appliances.forEach(appliance => {
+            if (appliance.brand_name === selectedBrand) {
+                const option = document.createElement('option');
+                option.value = appliance.product_name;
+                option.textContent = appliance.product_name;
+                productSelect.appendChild(option);
+            }
+        });
+    }
+</script>
+{% endblock %}

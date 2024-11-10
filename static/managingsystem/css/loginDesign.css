@@ -62,7 +62,7 @@ body {
     padding: 12px 16px;
     margin-bottom: 20px;
     transition: border-color 0.3s;
-    width: calc(100% - 34px);
+    /*width: calc(100% - 34px);*/
     box-sizing: border-box;
 }
 
@@ -103,3 +103,10 @@ body {
 .register-link a:hover {
     color: #0ee711; /* Зміна кольору при наведенні */
 }
+
+/*.error-message {*/
+/*    color: red;*/
+/*    margin: 10px 0;*/
+/*    justify-content: center;*/
+/*    */
+/*}*/
