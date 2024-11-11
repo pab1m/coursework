@@ -17,11 +17,8 @@ from .models import Appliance, PowerCalculation, PowerConsumption
 
 @login_required(login_url="login")
 def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login'))
-
     appliances = Appliance.objects.filter(user=request.user)
-    return render(request, 'managingsystem/index.html', {
+    return render(request, 'managingsystem/addappliance.html', {
         "appliances": appliances
     })
 
@@ -82,14 +79,14 @@ def add_app(request):
                     status=status
                 )
                 messages.success(request, 'Appliance added successfully!')
-                return redirect("index")
+                return redirect("add_appliance")
             except ValueError:
                 messages.error(request, 'Invalid power value. Please enter a valid number.')
         else:
             messages.error(request, 'All fields are required.')
 
     appliances = Appliance.objects.filter(user=request.user)
-    return render(request, "managingsystem/index.html", {
+    return render(request, "managingsystem/addappliance.html", {
         'appliances': appliances
     })
 
@@ -97,7 +94,7 @@ def add_app(request):
 def delete_app(request, appliance_id):
     appliance = get_object_or_404(Appliance, id=appliance_id, user=request.user)
     appliance.delete()
-    return redirect("index")
+    return redirect("add_appliance")
 
 
 def update_app(request, appliance_id):
@@ -111,7 +108,7 @@ def update_app(request, appliance_id):
         # Перевірка заповненості полів
         if not (brand_name and product_name and power and status):
             messages.error(request, 'Усі поля повинні бути заповнені.')
-            return redirect('index')
+            return redirect('add_appliance')
 
         appliance.brand_name = brand_name
         appliance.product_name = product_name
@@ -119,8 +116,8 @@ def update_app(request, appliance_id):
         appliance.status = status
         appliance.save()
         messages.success(request, 'Прилад успішно оновлено!')
-        return redirect("index")
-    return render(request, 'managingsystem/index.html', {'appliance': appliance})
+        return redirect("add_appliance")
+    return render(request, 'managingsystem/addappliance.html', {'appliance': appliance})
 
 
 def toggle_status(request, appliance_id):
@@ -130,7 +127,7 @@ def toggle_status(request, appliance_id):
     else:
         appliance.status = 'Ввімкнений'
     appliance.save()
-    return redirect("index")
+    return redirect("add_appliance")
 
 
 def power_calculation(request):
@@ -170,11 +167,6 @@ def power_calculation(request):
     appliances = Appliance.objects.filter(user=request.user, status='Ввімкнений')
     items = PowerCalculation.objects.filter(user=request.user)
     total_power = sum(item.power * item.quantity for item in items)
-
-    # # Зберігаємо загальне споживання електроенергії за день
-    # power_consumption, created = PowerConsumption.objects.get_or_create(user=request.user, date=date.today())
-    # power_consumption.total_power = total_power
-    # power_consumption.save()
 
     brands = appliances.values_list('brand_name', flat=True).distinct()
     appliances_json = json.dumps(list(appliances.values('brand_name', 'product_name')))
@@ -228,6 +220,9 @@ def add_to_dashboard(request):
 
 
 def dashboard(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+
     power_consumptions = PowerConsumption.objects.all().order_by('date')
     dates = [consumption.date.strftime('%Y-%m-%d') for consumption in power_consumptions]
     total_powers = [consumption.total_power for consumption in power_consumptions]
