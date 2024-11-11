@@ -1,57 +1,44 @@
 {% extends 'managingsystem/base.html' %}
 {% load static %}
 
+{% block links %}
+    <link rel="stylesheet" href="{% static 'managingsystem/css/dashboard.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <header>
-            <h1>Appliance Management System</h1>
-        </header>
-        <aside>
-            <div class="profile">
-                <p>Welcome,</p>
-                <p class="username">Admin</p>
+    <main class="test">
+        <!-- Контейнер для графіка -->
+        <div class="chart-container">
+            <canvas id="incomeChart"></canvas>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats">
+            <div class="stat-item">
+                <p>Кількість записів</p>
+                <p class="stat-value">{{ total_devices }}</p>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Dashboard</a></li>
-                    <li><a href="#">Add Appliances</a></li>
-                    <li><a href="#">Power Calculation</a></li>
-                </ul>
-            </nav>
-            <div class="sign-out">
-                <button>Sign Out</button>
+            <div class="stat-item">
+                <p>Середнє споживання</p>
+                <p class="stat-value">{{ average_consumption }}</p>
             </div>
-        </aside>
-        <main>
-            <div class="chart-container">
-                <canvas id="incomeChart"></canvas>
+            <div class="stat-item">
+                <p>Загальне споживання</p>
+                <p class="stat-value">{{ total_consumption }}</p>
             </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <p>Available Appliance</p>
-                    <p class="stat-value">2</p>
-                </div>
-                <div class="stat-item">
-                    <p>Total Expenses</p>
-                    <p class="stat-value">56234.0</p>
-                </div>
-                <div class="stat-item">
-                    <p>Total Customers</p>
-                    <p class="stat-value">14</p>
-                </div>
-            </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
     <script>
         var ctx = document.getElementById('incomeChart').getContext('2d');
         var incomeChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['2024-05-25', '2024-05-27', '2024-05-30', '2024-06-02', '2024-06-03', '2024-06-05', '2024-06-07', '2024-06-09', '2024-06-10'],
+                labels: {{ dates|safe }},
                 datasets: [{
                     label: 'Income Data Chart',
-                    data: [7000, 6000, 4000, 9000, 8000, 3000, 4000, 5000, 1000],
+                    data: {{ total_powers|safe }},
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1

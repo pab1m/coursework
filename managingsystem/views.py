@@ -1,15 +1,18 @@
 import json
+from datetime import date
 
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
-from .models import Appliance, PowerCalculation
+from .models import Appliance, PowerCalculation, PowerConsumption
 
 
 @login_required(login_url="login")
@@ -18,7 +21,7 @@ def index(request):
         return HttpResponseRedirect(reverse('login'))
 
     appliances = Appliance.objects.filter(user=request.user)
-    return render(request, 'managingsystem/index.html',{
+    return render(request, 'managingsystem/index.html', {
         "appliances": appliances
     })
 
@@ -168,6 +171,11 @@ def power_calculation(request):
     items = PowerCalculation.objects.filter(user=request.user)
     total_power = sum(item.power * item.quantity for item in items)
 
+    # # Зберігаємо загальне споживання електроенергії за день
+    # power_consumption, created = PowerConsumption.objects.get_or_create(user=request.user, date=date.today())
+    # power_consumption.total_power = total_power
+    # power_consumption.save()
+
     brands = appliances.values_list('brand_name', flat=True).distinct()
     appliances_json = json.dumps(list(appliances.values('brand_name', 'product_name')))
 
@@ -180,5 +188,54 @@ def power_calculation(request):
     })
 
 
+def add_to_dashboard(request):
+    if request.method == "POST":
+        total_power = request.POST.get('total_power')
+
+        if total_power:
+            try:
+                total_power = float(total_power)
+
+                # Отримуємо поточну дату без часу
+                today = timezone.now().date()
+
+                # Перевіряємо, чи вже є запис для цього користувача за сьогоднішній день
+                existing_record = PowerConsumption.objects.filter(user=request.user,
+                                                                  date=today).first()
+
+                if existing_record:
+                    # Якщо такий запис є, додаємо нове значення до поточного
+                    existing_record.total_power += total_power
+                    existing_record.save()
+                    messages.success(request, 'Total power updated on dashboard successfully!')
+                else:
+                    # Якщо запису немає, створюємо новий
+                    PowerConsumption.objects.create(
+                        user=request.user,
+                        total_power=total_power
+                    )
+                    messages.success(request, 'Total power added to dashboard successfully!')
+
+                # Видаляємо записи з PowerCalculation для поточного користувача
+                records_to_delete = PowerCalculation.objects.filter(user=request.user)
+                records_to_delete.delete()
+                messages.success(request, 'Selected power calculations removed successfully!')
+
+            except ValueError:
+                messages.error(request, 'Invalid total power value.')
+
+        return redirect('power_calculation')  # Повертаємось на сторінку обчислення потужності
+
+
 def dashboard(request):
-    return render(request, 'managingsystem/dashboard.html')
+    power_consumptions = PowerConsumption.objects.all().order_by('date')
+    dates = [consumption.date.strftime('%Y-%m-%d') for consumption in power_consumptions]
+    total_powers = [consumption.total_power for consumption in power_consumptions]
+
+    return render(request, 'managingsystem/dashboard.html', {
+        'dates': dates,
+        'total_powers': total_powers,
+        'total_devices': power_consumptions.count(),
+        'average_consumption': round(sum(total_powers) / len(total_powers) if total_powers else 0, 2),
+        'total_consumption': sum(total_powers)
+    })

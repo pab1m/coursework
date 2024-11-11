@@ -1,0 +1,117 @@
+/* Стилі для всіх елементів */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Основні стилі для тіла */
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Контейнер, який містить таблицю і форму */
+.test {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+    padding-left: 250px; /* Для того, щоб вміст не перекривав бокову панель */
+}
+
+/* Бічна панель */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh; /* Витягнути на всю висоту сторінки */
+}
+
+/* Стилі для заголовка на панелі */
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar h2 span {
+    font-weight: normal;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sign-out {
+    background: #449d6b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Стилі для основного контенту */
+.chart-container {
+     width: 100%;
+    height: 83.8vh; /* Висота графіка */
+    display: flex; /* Активуємо Flexbox */
+    justify-content: center; /* Центрування по горизонталі */
+    align-items: center; /* Центрування по вертикалі */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Статистика */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.stat-item {
+    background: #2575fc; /* Фон у синьому кольорі */
+    color: white; /* Білий текст */
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легка тінь */
+    border: 1px solid red; /* Чітка червона обводка */
+    border-radius: 5px; /* Заокруглення кутів */
+    transition: all 0.3s ease; /* Анімація при наведенні */
+}
+
+.stat-item:hover .stat-value {
+    color: #ff4d5f; /* Кольоровий ефект на значення */
+}
+
+.stat-item:first-child, .stat-item:last-child {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}

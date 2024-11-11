@@ -14,6 +14,8 @@ urlpatterns = [
     path("toggle_status/<int:appliance_id>/", views.toggle_status, name="toggle_status"),
 
     path("powercalculation/", views.power_calculation, name="power_calculation"),
+    path("add_to_dashboard/", views.add_to_dashboard, name="add_to_dashboard"),
+
     path("dashboard/", views.dashboard, name="dashboard"),
 ]
 

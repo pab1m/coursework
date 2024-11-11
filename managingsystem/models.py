@@ -23,5 +23,14 @@ class PowerCalculation(models.Model):
     brand_name = models.CharField(max_length=100)
     product_name = models.CharField(max_length=100)
     power = models.FloatField()
-    quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField()
+
+
+class PowerConsumption(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    total_power = models.FloatField()
+
+    def __str__(self):
+        return f"{self.user} - {self.date} - {self.total_power}"

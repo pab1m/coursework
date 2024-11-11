@@ -61,7 +61,12 @@
     <div class="total">
         <span>Total: </span><span class="total-value">{{ total_power }}</span>
     </div>
-    <button class="add-to-dashboard">Add to Dashboard</button>
+    <form method="post" action="{% url 'add_to_dashboard' %}" id="powerForm">
+        {% csrf_token %}
+        <input type="hidden" name="total_power" value="{{ total_power }}">
+        <button type="submit" class="add-to-dashboard" onclick="onAddToDashboard()">Додати до дашборду</button>
+    </form>
+
 </aside>
 
 <script>
@@ -85,5 +90,22 @@
             }
         });
     }
+
+    function clearTable() {
+        const tableBody = document.querySelector('.table-container tbody');
+        tableBody.innerHTML = ''; // Очищає вміст таблиці
+    }
+
+    // Функція для очищення таблиці і скидання форми
+    function onAddToDashboard() {
+        // Очищаємо таблицю
+        clearTable();
+
+        // Можна також скинути інші елементи, якщо потрібно
+        document.getElementById('brand').value = '';
+        document.getElementById('product-name').innerHTML = '<option value="">Виберіть...</option>';
+        document.getElementById('quantity').value = 0;
+    }
+
 </script>
 {% endblock %}
