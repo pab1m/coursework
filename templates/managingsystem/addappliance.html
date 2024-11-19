@@ -55,8 +55,8 @@
                                 <td><span class="brand">{{ appliance.brand_name }}</span></td>
                                 <td><span class="product">{{ appliance.product_name }}</span></td>
                                 <td><span class="power">{{ appliance.power }}</span></td>
-                                <td><span class="status">{{ appliance.status }}</span></td>
-                                <td>{{ appliance.date_added }}</td>
+                                <td class="status"><span>{{ appliance.status }}</span></td>
+                                <td>{{ appliance.date_added|date:"d F Y" }}</td>
                                 <td class="appliance-action">
                                     <button class="update-btn" onclick="editAppliance({{ appliance.id }})">Змінити</button>
                                     <form method="post" action="{% url 'delete_app' appliance.id %}" style="display:inline;">

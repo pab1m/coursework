@@ -227,7 +227,7 @@ def dashboard(request):
     dates = [consumption.date.strftime('%Y-%m-%d') for consumption in power_consumptions]
     total_powers = [consumption.total_power for consumption in power_consumptions]
 
-    return render(request, 'managingsystem/dashboard.html', {
+    return render(request, 'managingsystem/index.html', {
         'dates': dates,
         'total_powers': total_powers,
         'total_devices': power_consumptions.count(),

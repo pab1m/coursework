@@ -57,6 +57,9 @@ body {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;  /* робить кнопку широкою */
+    margin-top: auto;  /* розташовує кнопку внизу */
+    text-align: center;  /* центрує текст всередині кнопки */
 }
 
 /* Форма для вибору приладів */

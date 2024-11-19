@@ -27,7 +27,7 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5">No content in table</td>
+                            <td colspan="5">Записи відсутні</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -59,7 +59,7 @@
         <button type="submit" class="add-to-cart">Додати</button>
     </form>
     <div class="total">
-        <span>Total: </span><span class="total-value">{{ total_power }}</span>
+        <span>Загальна потужність: </span><span class="total-value">{{ total_power }}</span>
     </div>
     <form method="post" action="{% url 'add_to_dashboard' %}" id="powerForm">
         {% csrf_token %}

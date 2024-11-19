@@ -103,10 +103,3 @@ body {
 .register-link a:hover {
     color: #0ee711; /* Зміна кольору при наведенні */
 }
-
-/*.error-message {*/
-/*    color: red;*/
-/*    margin: 10px 0;*/
-/*    justify-content: center;*/
-/*    */
-/*}*/

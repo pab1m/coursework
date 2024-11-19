@@ -19,7 +19,7 @@ urlpatterns = [
 
 
 
-    path("dashboard/", views.dashboard, name="dashboard"),
+    # path("dashboard/", views.dashboard, name="dashboard"),
 ]
 
 
