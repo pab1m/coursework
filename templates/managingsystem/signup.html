@@ -1,31 +1,31 @@
-{% extends 'managingsystem/base.html' %}
 {% load static %}
 
-{% block links %}
-    <link rel="stylesheet" href="{% static 'managingsystem/css/loginDesign.css' %}"> <!-- Підключення CSS-файлу -->
-{% endblock %}
-
-{% block body %}
-
-    <form action="{% url 'signup' %}" method="post">
-        {% csrf_token %}
-        <div class="stack-pane"> <!-- Основний контейнер, який об'єднує ліву та праву частини -->
-            <div class="left-form"> <!-- Ліва частина -->
-                <label>Система Управління Витратами</label> <!-- Текст у лівій частині -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="{% static 'managingsystem/css/loginDesign.css' %}">
+    <link rel="stylesheet" href="{% static 'managingsystem/images/background.jpg' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+            <div class="stack-pane"> <!-- Основний контейнер, який об'єднує ліву та праву частини -->
+                <div class="left-form"> <!-- Ліва частина -->
+                    <label>Система Управління Витратами</label> <!-- Текст у лівій частині -->
+                </div>
+                <div class="right-form"> <!-- Права частина -->
+                    <label>Реєстрація</label> <!-- Привітальний текст -->
+                    <input type="text" class="textfield" name="username" placeholder="Логін">
+                    <input type="password" class="textfield" name="password" placeholder="Пароль">
+                    <input type="password" class="textfield" name="confirmation" placeholder="Підтвердження пароля">
+                    <button class="login-btn">Зареєструватися</button> <!-- Кнопка входу -->
+                </div>
             </div>
-            <div class="right-form"> <!-- Права частина -->
-
-{#                {% if message %}#}
-{#                <div class="error-message">{{ message }}</div>#}
-{#                {% endif %}#}
-
-                <label>Реєстрація</label> <!-- Привітальний текст -->
-                <input type="text" class="textfield" name="username" placeholder="Логін">
-                <input type="password" class="textfield" name="password" placeholder="Пароль">
-                <input type="password" class="textfield" name="confirmation" placeholder="Підтвердження пароля">
-                <button class="login-btn">Зареєструватися</button> <!-- Кнопка входу -->
-            </div>
-        </div>
-    </form>
-{% endblock %}
-
+        </form>
+    </div>
+</body>
+</html>

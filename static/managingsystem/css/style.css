@@ -3,7 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Основні стилі для тіла */
@@ -15,7 +15,6 @@ body {
 /* Контейнер, який містить сайдбар і основний контент */
 .container {
     display: flex;
-    /*width: 100%;*/
 }
 
 /* Сайдбар з основними налаштуваннями */
@@ -53,15 +52,15 @@ body {
 
 /* Стилі для кнопки виходу */
 .sign-out {
-    background: #449d6b;
+    background: #28a745;
     color: white;
     border: none;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;  /* робить кнопку широкою */
-    margin-top: auto;  /* розташовує кнопку внизу */
-    text-align: center;  /* центрує текст всередині кнопки */
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
 }
 
 /* Основний контент */
@@ -70,13 +69,16 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    background: #f8f9fa;
 }
 
 /* Розділ форми */
 .form-section {
-    background: #f4f4f4;
+    background: #fff;
     border-radius: 10px;
+    padding: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-section h3 {
@@ -84,7 +86,7 @@ body {
 }
 
 .form-group {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
@@ -95,9 +97,15 @@ body {
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
+    transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #007bff;
 }
 
 /* Кнопки в формі */
@@ -107,50 +115,60 @@ body {
     margin-top: 20px;
 }
 
-.form-buttons button {
+.form-buttons .btn {
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.import-btn {
-    background: #ccc;
-}
-
-.add-btn {
+.btn-primary {
     background: #007bff;
     color: white;
 }
 
-.update-btn {
-    background: #28a745;
-    color: white;
+.btn-primary:hover {
+    background: #0056b3;
 }
 
-.clear-btn {
+.btn-secondary {
     background: #6c757d;
     color: white;
 }
 
-.delete-btn {
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-danger {
     background: #dc3545;
     color: white;
 }
 
-/* Розділ таблиці */
-.table-section {
-    background: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
+.btn-danger:hover {
+    background: #c82333;
 }
 
-.table-section input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.btn-warning {
+    background: #ffc107;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #e0a800;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Розділ таблиці */
+.table-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -159,50 +177,62 @@ table {
 }
 
 table th, table td {
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 15px;
+    border: 1px solid #ddd;
     text-align: left;
 }
 
 table th {
-    background: #eaeaea;
+    background: #f1f1f1;
 }
 
-table td.status {
-    width: 150px;  /* Можна регулювати за необхідності */
-}
-
-/* Кнопки в таблиці */
-.appliance-actions {
+.table-actions {
     display: flex;
-    justify-content: space-between;
     gap: 10px;
 }
 
-.appliance-actions button,
-.appliance-actions form button {
+/* Updated button styles for the table actions */
+.table-actions .btn {
     flex: 1;
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-
-.update-btn {
-    background: #28a745;
+/* Styling for the update button */
+.table-actions .btn-secondary {
+    background-color: #6c757d;
     color: white;
-    width: 32%;
+}
+.table-actions .btn-secondary:hover {
+    background-color: #5a6268;
+}
+.table-actions .btn-secondary:active {
+    transform: scale(0.98);
 }
 
-.delete-btn {
-    background: #dc3545;
+/* Styling for the delete button */
+.table-actions .btn-danger {
+    background-color: #dc3545;
     color: white;
-    width: 32%;
+}
+.table-actions .btn-danger:hover {
+    background-color: #c82333;
+}
+.table-actions .btn-danger:active {
+    transform: scale(0.98);
 }
 
-.status-btn {
-    background: #ffc107;
+/* Styling for the toggle status button */
+.table-actions .btn-warning {
+    background-color: #ffc107;
     color: white;
-    width: 32%;
+}
+.table-actions .btn-warning:hover {
+    background-color: #e0a800;
+}
+.table-actions .btn-warning:active {
+    transform: scale(0.98);
 }

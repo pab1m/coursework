@@ -3,7 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Основні стилі для тіла */
@@ -11,6 +11,8 @@ body {
     display: flex;
     height: 100vh;
     margin: 0;
+    background: #f4f7f6;
+    color: #333;
 }
 
 /* Контейнер, який містить таблицю і форму */
@@ -20,6 +22,7 @@ body {
     height: 100%;
     flex-grow: 1;
     padding-left: 250px; /* Для того, щоб вміст не перекривав бокову панель */
+    padding-top: 20px;
 }
 
 /* Бічна панель */
@@ -40,6 +43,8 @@ body {
 /* Стилі для заголовка на панелі */
 .sidebar h2 {
     margin-bottom: 20px;
+    /*font-weight: bold;*/
+    /*font-size: 1.5em;*/
 }
 
 .sidebar h2 span {
@@ -48,6 +53,7 @@ body {
 
 .sidebar ul {
     list-style: none;
+    /*padding: 0;*/
 }
 
 .sidebar ul li {
@@ -58,29 +64,53 @@ body {
     color: white;
     text-decoration: none;
     font-size: 18px;
+    /*transition: color 0.3s ease;*/
+}
+
+.sidebar ul li a:hover {
+    color: #ffeb3b;
 }
 
 .sign-out {
-    background: #449d6b;
+    background: #28a745;
     color: white;
     border: none;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;  /* робить кнопку широкою */
-    margin-top: auto;  /* розташовує кнопку внизу */
-    text-align: center;  /* центрує текст всередині кнопки */
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
+}
+
+.sign-out:hover {
+    background: #367a54;
 }
 
 /* Стилі для основного контенту */
 .chart-container {
     width: 100%;
-    height: 83.8vh; /* Висота графіка */
+    height: 70vh; /* Висота графіка */
     display: flex; /* Активуємо Flexbox */
     justify-content: center; /* Центрування по горизонталі */
     align-items: center; /* Центрування по вертикалі */
     padding: 20px;
     box-sizing: border-box;
+    background: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 canvas {
@@ -104,23 +134,26 @@ canvas {
     flex-grow: 1;
     margin: 0 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легка тінь */
-    border: 1px solid black; /* Чітка червона обводка */
-    border-radius: 5px; /* Заокруглення кутів */
-    /*transition: all 0.3s ease; !* Анімація при наведенні *!*/
+    border-radius: 8px; /* Заокруглення кутів */
+    transition: all 0.3s ease; /* Анімація при наведенні */
 }
 
-/*.stat-item:hover .stat-value {*/
-/*    color: #ff4d5f; !* Кольоровий ефект на значення *!*/
-/*}*/
+.stat-item:hover {
+    background: #1f63d0;
+}
 
 .stat-item:first-child, .stat-item:last-child {
     margin-left: 0;
     margin-right: 0;
 }
 
-
 .stat-value {
     font-size: 24px;
     font-weight: bold;
     margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.stat-item:hover .stat-value {
+    color: #ffeb3b; /* Кольоровий ефект на значення */
 }

@@ -3,7 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Основні стилі для тіла */
@@ -15,7 +15,6 @@ body {
 /* Контейнер, який містить таблицю і форму */
 .container {
     display: flex;
-    /*width: 100%;*/
 }
 
 .sidebar {
@@ -51,7 +50,7 @@ body {
 }
 
 .sign-out {
-    background: #449d6b;
+    background: #28a745;
     color: white;
     border: none;
     padding: 10px;
@@ -66,9 +65,11 @@ body {
 .form-container {
     flex: 1;
     padding: 20px;
-    background: #f4f4f4;
+    background: #f4f4f4; /* Змінено на білий фон */
     border-radius: 10px;
     margin-right: 20px;
+
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легка тінь. */
 }
 
 .form-group {
@@ -113,7 +114,7 @@ button.add-to-dashboard {
 }
 
 .table-container {
-    background: #f4f4f4;
+    background: #fff; /* Змінено на білий фон */
     border-radius: 10px;
     padding: 20px;
     overflow-x: auto;
@@ -129,8 +130,10 @@ button.add-to-dashboard {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легка тінь. */
 }
 
 .table-container table th {
-    background: #eaeaea;
+    background: #f1f1f1;
+
 }
