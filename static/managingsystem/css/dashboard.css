@@ -43,8 +43,6 @@ body {
 /* Стилі для заголовка на панелі */
 .sidebar h2 {
     margin-bottom: 20px;
-    /*font-weight: bold;*/
-    /*font-size: 1.5em;*/
 }
 
 .sidebar h2 span {
@@ -53,7 +51,6 @@ body {
 
 .sidebar ul {
     list-style: none;
-    /*padding: 0;*/
 }
 
 .sidebar ul li {
@@ -64,7 +61,6 @@ body {
     color: white;
     text-decoration: none;
     font-size: 18px;
-    /*transition: color 0.3s ease;*/
 }
 
 .sidebar ul li a:hover {
@@ -156,4 +152,32 @@ canvas {
 
 .stat-item:hover .stat-value {
     color: #ffeb3b; /* Кольоровий ефект на значення */
+}
+
+/* Стилі для кнопок формування звіту */
+.report-button-container {
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.report-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin: 0 10px; /* Відстань між кнопками */
+    text-align: center; /* Вирівнювання тексту по центру */
+    text-decoration: none; /* Відключення підкреслення для посилання */
+    display: inline-block; /* Для того, щоб стилі застосовувалися до обох елементів */
+}
+
+.report-button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
 }

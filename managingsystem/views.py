@@ -1,9 +1,9 @@
 import json
-from datetime import date
+import pandas as pd
 
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
-from django.http import JsonResponse
+from django.db.models import Avg, Sum
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -234,3 +234,32 @@ def dashboard(request):
         'average_consumption': round(sum(total_powers) / len(total_powers) if total_powers else 0, 2),
         'total_consumption': sum(total_powers)
     })
+
+
+def export_to_excel(request):
+    # Отримуємо дані з бази даних
+    data = PowerConsumption.objects.all().values('date', 'total_power')
+    df = pd.DataFrame(list(data))
+
+    # Додаємо статистику
+    total_devices = PowerConsumption.objects.count()
+    average_consumption = PowerConsumption.objects.aggregate(Avg('total_power'))['total_power__avg']
+    total_consumption = PowerConsumption.objects.aggregate(Sum('total_power'))['total_power__sum']
+
+    # Створюємо новий DataFrame для статистики
+    stats_data = {
+        'Показник': ['Кількість записів', 'Середнє споживання', 'Загальне споживання'],
+        'Значення': [total_devices, average_consumption, total_consumption]
+    }
+    stats_df = pd.DataFrame(stats_data)
+
+    # Створюємо Excel writer і записуємо дані на окремі листи
+    with pd.ExcelWriter('report.xlsx', engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name='Графік Дані')
+        stats_df.to_excel(writer, index=False, sheet_name='Статистика')
+
+    # Читаємо згенерований файл і відправляємо його як відповідь
+    with open('report.xlsx', 'rb') as f:
+        response = HttpResponse(f.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="report.xlsx"'
+        return response

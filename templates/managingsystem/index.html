@@ -5,12 +5,15 @@
     <link rel="stylesheet" href="{% static 'managingsystem/css/dashboard.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 {% endblock %}
 
 {% block body %}
     <main class="test">
         <!-- Контейнер для графіка -->
-        <div class="chart-container">
+        <div class="chart-container" id="chartContainer">
             <canvas id="incomeChart"></canvas>
         </div>
 
@@ -28,6 +31,11 @@
                 <p>Загальне споживання</p>
                 <p class="stat-value">{{ total_consumption }}</p>
             </div>
+        </div>
+
+        <div class="report-button-container">
+            <button class="btn btn-primary report-button" id="generateReport" onclick="takeScreenshot()">Зберегти графік</button>
+            <a href="{% url 'export_to_excel' %}" class="btn btn-primary report-button">Експортувати в Excel</a>
         </div>
     </main>
 
@@ -53,5 +61,22 @@
                 }
             }
         });
+
+        function takeScreenshot(){
+            html2canvas(document.querySelector("#incomeChart")).then((canvas)=>{
+                const imgData = canvas.toDataURL("image/png");
+
+                // Створення посилання для завантаження
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'chart.png';
+
+                // Імітація кліку на посиланні
+                link.click();
+                }).catch((error) => {
+                    console.error('Сталася помилка під час створення canvas:', error);
+            });
+         }
+
     </script>
 {% endblock %}
