@@ -34,7 +34,7 @@ def login_view(request):
             return redirect("index")
         else:
             return render(request, "managingsystem/login.html", {
-                "message": "Invalid"
+                "message": "Некоректні дані"
             })
 
     return render(request, "managingsystem/login.html")
@@ -52,7 +52,9 @@ def sign_up(request):
         confirmation = request.POST["confirmation"]
 
         if password != confirmation:
-            return render(request, "managingsystem/signup.html")
+            return render(request, "managingsystem/signup.html", {
+                "message": "Паролі не співпадають"
+            })
 
         user = User.objects.create_user(username=username, password=password)
         user.save()
@@ -81,7 +83,7 @@ def add_app(request):
                 messages.success(request, 'Appliance added successfully!')
                 return redirect("add_appliance")
             except ValueError:
-                messages.error(request, 'Invalid power value. Please enter a valid number.')
+                messages.error(request, 'Недійсне значення потужності. Введіть дійсний номер.')
         else:
             messages.error(request, 'All fields are required.')
 
@@ -223,7 +225,7 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('login'))
 
-    power_consumptions = PowerConsumption.objects.all().order_by('date')
+    power_consumptions = PowerConsumption.objects.filter(user=request.user).order_by('date')
     dates = [consumption.date.strftime('%Y-%m-%d') for consumption in power_consumptions]
     total_powers = [consumption.total_power for consumption in power_consumptions]
 
@@ -255,7 +257,7 @@ def export_to_excel(request):
 
     # Створюємо Excel writer і записуємо дані на окремі листи
     with pd.ExcelWriter('report.xlsx', engine='openpyxl') as writer:
-        df.to_excel(writer, index=False, sheet_name='Графік Дані')
+        df.to_excel(writer, index=False, sheet_name='Дані')
         stats_df.to_excel(writer, index=False, sheet_name='Статистика')
 
     # Читаємо згенерований файл і відправляємо його як відповідь

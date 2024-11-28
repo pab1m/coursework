@@ -152,3 +152,33 @@ body::before {
 .register-link a:hover {
     color: #0ee711;
 }
+
+.alert {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: auto;
+    padding: 10px 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+ /* Додаємо плавний перехід */
+    .alert {
+        transition: opacity 1s ease-out;  /* Плавний перехід для opacity */
+        opacity: 1;  /* Початковий стан - повідомлення видно */
+    }
+    .alert.fade-out {
+        opacity: 0;  /* Стан після додавання класу fade-out */
+    }
